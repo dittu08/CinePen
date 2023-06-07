@@ -51,6 +51,23 @@
             color: #0B304D;
             border-radius: 5px;
         }
+        
+        /* buttons */
+        .pf-btns {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-column-gap: 20px; /*수정요함*/
+        }
+        .pf-btns div {
+            background-color: #F38011;
+            border-radius: 15px;
+            color: #000000;
+            width: 400px;
+            height: 125px;
+            margin-top: 30px;
+        }
+        
+        
         /*   recent reviews */
         .card {
             position: relative;
@@ -146,9 +163,23 @@
     </nav>
       
     <div class="title">Movie info</div>
-        <div class="review_amount">총 리뷰 수</div>
-        <div class="myrating">My rating</div>
-        <div class="favorite">찜</div>
+    
+    <div class="pf-btns">
+            <div class="reviewAmount">
+                <p class="Rv-w">총 리뷰 수</p>
+                <p class="Rv-f">nn</p>
+            </div>
+            <div class="myRating">
+                <p class="myRt-w">내 별점</p>
+                <p class="myRt-f">⭐⭐⭐⭐⭐</p>
+            </div>
+            <div class="myLike">
+                <p class="myL-w">보고 싶어요</p>
+                <p class="myL-f">❤️</p>
+            </div>
+        </div>
+    
+    <div class="favorite">찜</div>
       <div id="editor"></div>
         <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
         <script>

@@ -139,5 +139,29 @@
               <p>이미 계정이 있으신가요? <a href="">Sign in</a></p>
           </form>
         </div>
+
+        <script>
+          function checkEmail() {
+            const email = document.getElementById('email');
+            const uid = email.value;
+            if(email.value.lenth == 0) {
+              alert("이메일을 입력하세요.");
+            }
+            else {
+              const xhs = new XMLHttpRequest();
+              xhs.onreadystatechange = function() {
+                if(xhs.readyState === xhs.DONE) {
+                  if(xhs.status === 200) {
+                    const result = JSON.parse(xhs.responseText);
+                    if(result.succ === true) alert("이미 등록된 이메일입니다.");
+                    else alert("사용 가능한 이메일입니다.");
+                  }
+                }
+              }
+              xhs.open('GET', 'checkemail.php?uid='+uid);
+              xhs.send();
+            }
+          }
+        </script>
     </body>
 </html>

@@ -14,5 +14,6 @@ CREATE TABLE `member` (
   `rv_count` int DEFAULT 0,
   `avg_rating` float DEFAULT 0,
   `like_list` text,
+  `regdate` date NOT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;

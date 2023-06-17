@@ -12,9 +12,6 @@
             }
 
             /* navbar */
-            body {
-                width: 1240px;
-            }
             .navbar {
                 background-color: #0B304D;
                 display: flex;
@@ -23,21 +20,26 @@
                 padding: 3px;
                 height: 55px;
             }
+            .logo {
+                position: absolute;
+                margin: 10px;
+            }
             .logo a {
                 color: #FFF0E3;
                 text-decoration: none;
                 font-size: x-large;
                 font-weight: bold;
-                margin-left: 20px;
+                padding-left: 10px;
             }
             #search {
-                margin-top: 10px;
-                margin-right: 20px;
+                position: absolute;
+                float: right;
+                right: 200px;
             }
             .register {
                 list-style-type: none;
                 display: flex;
-                margin-right: 0;
+                margin-left: auto;
                 flex-wrap: wrap;
                 white-space: nowrap;
             }
@@ -55,8 +57,52 @@
                 color: #0B304D;
                 border-radius: 5px;
             }
+            .menu {
+                position: relative;
+                display: inline-flex;
+                flex-direction: column;
+                align-items: flex-end;
+                margin-left: auto;
+            }
+            .nav-pf {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                overflow: hidden;
+                margin: 3px;
+                margin-right: 20px;
+            }
+            .nav-pf img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .menu-content {
+                display: none;
+                background-color: #0B304D;
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 10;
+            }
+            .menu-content a {
+                display: block;
+                color: #FFF0E3;
+                padding: 12px 16px;
+                text-decoration: none;
+            }
+            .menu:hover .menu-content {
+                display: block;
+            }
+            .menu-content a:hover {
+                background-color: #FFF0E3;
+                color: #0B304D;
+            }
 
             /* profile edit */
+            .pf-edit {
+                display: flex;
+                flex-direction: column;
+            }
             .pf-img {
                 width: 150px;
                 height: 150px;
@@ -71,7 +117,6 @@
         </style>
     </head>
     <body>
-
         <?php
         session_start();
         include_once('dbconn.php');
@@ -85,53 +130,83 @@
 
         <!-- navbar -->
         <nav class="navbar">
-            <div class="logo">
-                <a href="">Movie Reviews</a>
+            <p class="logo"><a href="">CinePen</a></p>
+            <input id="search" type="text" name="search" placeholder="검색어를 입력해주세요.">
+            <div class="register">
+                <div class="menu" style="float: right;">
+                    <a class="nav-pf" href=""><img src="images/grogu.jpg"></a>
+                    <div class="menu-content">
+                        <a href="profile.html">Profile</a>
+                        <a href="signmodify.php">Setting</a>
+                        <a href="signout.php">Sign out</a>
+                    </div>
+                </div>
             </div>
-            <ul class="register">
-                <li id="search"><input type="text" name="search" placeholder="검색어를 입력해주세요."></li>
-                <li><button>Sign in</button></li>
-                <li><button>Sign up</button></li>
-            </ul>
         </nav>
 
         <!-- profile edit -->
-        <div class="container">
-            <form action="signmodproc.php" method="post">
-                <!-- <div class="pf-img">
-                    <img src="images/grogu.jpg">
+        <div class="pf-edit">
+            <div class="pf-img">
+                <img src="images/grogu.jpg">
+            </div>
+            <div class="contents">
+                <div class="title">
+                    <h3>회원 정보 수정</h3>
+                    <input type="submit" value="저장">
                 </div>
-                <h3 class="pf-edit">Profile Edit</h3>
-                <button class="submit" type="submit" value="submit">저장</button>
-                <div class="name">
-                    <p>이름</p>
-                    <input type="text" name="name" value="" id="name">
+                <div class="container">
+                    <form action="signmodproc.php" method="post">
+                        <div class="row">
+                            <div class="col-25">
+                                <label for="lname">이름</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="uname" value="<?= $row[1] ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label for="lname">한 줄 소개</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="uinfo" value="<?= $row[1] ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label for="fname">이메일</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="email" value="<?= $row[0] ?>" id="email" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label for="lname">아이디</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="uid" value="<?= $row[1] ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label for="lname">비밀번호</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="password" name="pwd" value="<?= $row[2] ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label for="lname">비밀번호 확인</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="password" name="pwd" value="<?= $row[2] ?>">
+                            </div>
+                        </div>
+                </form>
                 </div>
-                <div class="info">
-                    <p>소개</p>
-                    <input type="text" name="info" value="" id="info" placeholder="한 줄 소개를 입력하세요.">
-                </div>
-                <div class="email">
-                    <p>이메일</p>
-                    <input type="text" name="email" value="" id="email" readonly>
-                </div>
-                <div class="id">
-                    <p>아이디</p>
-                    <input type="text" name="id" value="" id="id">
-                </div>
-                <div class="pwd">
-                    <p>비밀번호</p>
-                    <input type="password" name="pwd" value="" id="pwd">
-                </div>
-                <div class="pwd-chk">
-                    <p>비밀번호 확인</p>
-                    <input type="password" name="pwd-chk" value="" id="pwd-chk">
-                </div>
-                <div class="cancel">
-                    <p>계정 탈퇴</p>
-                    <input type="submit" value="탈퇴하기">
-                </div> -->
-            </form>
+            </div>
         </div>
         
         <?php
@@ -140,27 +215,6 @@
         ?>
 
         <script>
-            function checkEmail() {
-                const email = document.getElementById('email');
-                const uid = email.value;
-                if(email.value.length == 0) {
-                alert("이메일을 입력하세요.");
-                }
-                else {
-                    const xhs = new XMLHttpRequest();
-                    xhs.onreadystatechange = function() {
-                        if(xhs.readyState === xhs.DONE) {
-                        if(xhs.status === 200) {
-                            const result = JSON.parse(xhs.responseText);
-                            if(result.succ === true) alert("이미 등록된 이메일입니다.");
-                            else alert("사용 가능한 이메일입니다.");
-                        }
-                        }
-                }
-                xhs.open('GET', 'checkemail.php?uid='+uid);
-                xhs.send();
-                }
-            }
         </script>
     </body>
 </html>

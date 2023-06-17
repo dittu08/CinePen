@@ -281,7 +281,7 @@
                     <a class="nav-pf" href=""><img src="images/grogu.jpg"></a>
                     <div class="menu-content">
                         <a href="profile.html">Profile</a>
-                        <a href="setting.html">Setting</a>
+                        <a href="signmodify.php">Setting</a>
                         <a href="signout.php">Sign out</a>
                     </div>
                 </div>

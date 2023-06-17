@@ -12,9 +12,6 @@
             }
 
             /* navbar */
-            body {
-                width: 1240px;
-            }
             .navbar {
                 background-color: #0B304D;
                 display: flex;
@@ -23,21 +20,26 @@
                 padding: 3px;
                 height: 55px;
             }
+            .logo {
+                position: absolute;
+                margin: 10px;
+            }
             .logo a {
                 color: #FFF0E3;
                 text-decoration: none;
                 font-size: x-large;
                 font-weight: bold;
-                margin-left: 20px;
+                padding-left: 10px;
             }
             #search {
-                margin-top: 10px;
-                margin-right: 20px;
+                position: absolute;
+                float: right;
+                right: 200px;
             }
             .register {
                 list-style-type: none;
                 display: flex;
-                margin-right: 0;
+                margin-left: auto;
                 flex-wrap: wrap;
                 white-space: nowrap;
             }
@@ -55,32 +57,72 @@
                 color: #0B304D;
                 border-radius: 5px;
             }
+
+            /* sign up */
             h2 {
+                font-weight: bold;
                 margin-top: 100px;
                 text-align: center;
             }
-            p {
-                font-size: 5px;
-                padding-top: 5px;
-            }
             .container {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
                 color: #0B304D;
+                padding: 60px;
+                display: flex;
+                justify-content: center;
                 text-align: center;
-                padding-left: 60px;
-                padding-right: 60px;
             }
-            button {
-                margin-top: 5px;
-                border-radius: 20px;
-                padding: 3px 30px 3px 30px;
+            .row {
+                padding: 10px;
+                width: 400px;
+            }
+            .col-25 {
+                text-align: left;
+                margin-bottom: 5px;
+            }
+            .input {
+                width: 355px;
+                height: 40px;
+                border: 1px solid #0B304D;
+                border-radius: 5px;
+            }
+            #chkbtn {
+              position: absolute;
+              margin: 5px 10px;
+              font-size: small;
+              width: 70px;
+              height: 30px;
+              background-color: #0B304D;
+              color: white;
+            }
+            #chkbtn:hover {
+              background-color: white;
+              color: #0B304D;
+            }
+            .etc {
+                font-size: 13px;
+                padding-top: 5px;
+                text-align: right;
+            }
+            .etc a {
+                color: #6d88ab;
+            }
+            .etc a:hover {
+                color: black;
+            }
+            .signbtn {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+	          .signup-btn {
+                border-radius: 50px;
                 background-color: white;
+                width: 150px;
+                height: 40px;
+                margin: 20px;
             }
-            button:hover {
-                background-color: #F38011;
+            .signup-btn:hover {
+                background-color: #0B304D;
                 color: white;
             }
         </style>
@@ -88,26 +130,24 @@
     <body>
         <!-- navbar -->
         <nav class="navbar">
-            <div class="logo">
-                <a href="">Movie Reviews</a>
-            </div>
-            <ul class="register">
-                <li id="search"><input type="text" name="search" placeholder="검색어를 입력해주세요."></li>
-                <li><button>Sign in</button></li>
-                <li><button>Sign up</button></li>
-            </ul>
+          <p class="logo"><a href="">CinePen</a></p>
+          <input id="search" type="text" name="search" placeholder="검색어를 입력해주세요.">
+          <div class="register">
+              <button onclick="location.href='signin.html'">Sign in</button>
+              <button onclick="location.href='signup.html'">Sign up</button>
+          </div>
         </nav>
 
         <!-- sign up -->
         <h2>Sign up</h2>
         <div class="container">
-          <form action="signup.php" method="post">
+          <form action="signup.php" method="post" onsubmit="return checkPassword();">
             <div class="row">
               <div class="col-25">
                 <label for="lname">이름</label>
               </div>
               <div class="col-75">
-                <input type="text" name="uname">
+                <input class="input" type="text" name="uname">
               </div>
             </div>
             <div class="row">
@@ -115,8 +155,8 @@
                 <label for="fname">이메일</label>
               </div>
               <div class="col-75">
-                <input type="text" name="email" id="email">
-				<button type="button" id="chkbtn" onclick="checkEmail()">중복확인</button>
+                <input class="input" type="text" name="email" id="email">
+				        <button class="signup-btn" type="button" id="chkbtn" onclick="checkEmail()">중복확인</button>
               </div>
             </div>
             <div class="row">
@@ -124,15 +164,26 @@
                 <label for="lname">비밀번호</label>
               </div>
               <div class="col-75">
-                <input type="password" name="pwd">
+                <input class="input" type="password" name="pwd" id="pwd">
               </div>
             </div>
-              <button type="submit">Sign up</button>
-              <p>이미 계정이 있으신가요? <a href="">Sign in</a></p>
+            <div class="row">
+              <div class="col-25">
+                <label for="lname">비밀번호 확인</label>
+              </div>
+              <div class="col-75">
+                <input class="input" type="password" name="pwd" id="chkpwd">
+              </div>
+            </div>
+            <div class="signbtn">
+              <button class="signup-btn" type="submit">Sign up</button>
+              <p class="etc">이미 계정이 있으신가요? <a href="signin.html">Sign in</a></p>
+            </div>
           </form>
         </div>
 
         <script>
+          // email check
           function checkEmail() {
             const email = document.getElementById('email');
             const uid = email.value;
@@ -144,8 +195,9 @@
               xhs.onreadystatechange = function() {
                 if(xhs.readyState === xhs.DONE) {
                   if(xhs.status === 200) {
+                    // alert(xhs.responseText);
                     const result = JSON.parse(xhs.responseText);
-                    if(result.succ === true) alert("이미 등록된 이메일입니다.");
+                    if(result.exists === true) alert("이미 등록된 이메일입니다.");
                     else alert("사용 가능한 이메일입니다.");
                   }
                 }
@@ -153,6 +205,17 @@
               xhs.open('GET', 'checkemail.php?uid='+uid);
               xhs.send();
             }
+          }
+
+          // password check
+          function checkPassword() {
+            var pwd = document.getElementById('pwd').value;
+            var chkpwd = document.getElementById('chkpwd').value;
+            if(pwd !== chkpwd) {
+              alert("비밀번호가 일치하지 않습니다.");
+              return false;
+            }
+            else return true;
           }
         </script>
     </body>

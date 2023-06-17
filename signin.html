@@ -12,38 +12,40 @@
             }
 
             /* navbar */
-            body {
-                width: 1240px;
-            }
             .navbar {
-                background-color: #F38011;
+                background-color: #0B304D;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 padding: 3px;
                 height: 55px;
             }
+            .logo {
+                position: absolute;
+                margin: 10px;
+            }
             .logo a {
                 color: #FFF0E3;
                 text-decoration: none;
                 font-size: x-large;
                 font-weight: bold;
-                margin-left: 20px;
+                padding-left: 10px;
             }
             #search {
-                margin-top: 10px;
-                margin-right: 20px;
+                position: absolute;
+                float: right;
+                right: 200px;
             }
             .register {
                 list-style-type: none;
                 display: flex;
-                margin-right: 0;
+                margin-left: auto;
                 flex-wrap: wrap;
                 white-space: nowrap;
             }
             .register button {
-                background-color: #FFFFFF;
-                color: #0B304D;
+                background-color: #0B304D;
+                color: #FFF0E3;
                 text-decoration: none;
                 padding: 5px 8px;
                 margin: 5px;
@@ -55,31 +57,58 @@
                 color: #0B304D;
                 border-radius: 5px;
             }
+
+            /* sign in */
             h2 {
+                font-weight: bold;
                 margin-top: 100px;
                 text-align: center;
             }
-            p {
-                font-size: 5px;
-                padding-top: 5px;
-            }
             .container {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
                 color: #0B304D;
+                padding: 60px;
+                display: flex;
+                justify-content: center;
                 text-align: center;
-                padding-left: 60px;
-                padding-right: 60px;
             }
-	    button {
-                margin-top: 5px;
-                border-radius: 20px;
-                padding: 3px 30px 3px 30px;
+            .row {
+                padding: 10px;
+                width: 400px;
+            }
+            .col-25 {
+                text-align: left;
+                margin-bottom: 5px;
+            }
+            .input {
+                width: 355px;
+                height: 40px;
+                border: 1px solid #0B304D;
+                border-radius: 5px;
+            }
+            .etc {
+                font-size: 13px;
+                padding-top: 5px;
+                text-align: right;
+            }
+            .etc a {
+                color: #6d88ab;
+            }
+            .etc a:hover {
+                color: black;
+            }
+            .signbtn {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+	        .signin-btn {
+                border-radius: 50px;
                 background-color: white;
+                width: 150px;
+                height: 40px;
+                margin: 20px;
             }
-            button:hover {
+            .signin-btn:hover {
                 background-color: #0B304D;
                 color: white;
             }
@@ -88,40 +117,40 @@
     <body>
         <!-- navbar -->
         <nav class="navbar">
-            <div class="logo">
-                <a href="">Movie Reviews</a>
+            <p class="logo"><a href="">CinePen</a></p>
+            <input id="search" type="text" name="search" placeholder="검색어를 입력해주세요.">
+            <div class="register">
+                <button onclick="location.href='signin.html'">Sign in</button>
+                <button onclick="location.href='signup.html'">Sign up</button>
             </div>
-            <ul class="register">
-                <li id="search"><input type="text" name="search" placeholder="검색어를 입력해주세요."></li>
-                <li><button>Sign in</button></li>
-                <li><button>Sign up</button></li>
-            </ul>
         </nav>
 
         <!-- sign up -->
         <h2>Sign in</h2>
         <div class="container">
-          <form action="signin.php" method="post">
-            <div class="row">
-              <div class="col-25">
-                <label for="fname">이메일</label>
-              </div>
-              <div class="col-75">
-                <input type="text" name="email" id="email">
-				</div>
-            </div>
-            <div class="row">
-              <div class="col-25">
-                <label for="lname">비밀번호</label>
-              </div>
-              <div class="col-75">
-                <input type="password" name="pwd">
-              </div>
-              <p><a href="">Forgot password?</a></p>
-            </div>
-              <button type="submit">Sign in</button>
-              <p>or <a href="signup.html">Sign up</a> for free</p>
-          </form>
+            <form action="signin.php" method="post">
+                <div class="row">
+                    <div class="col-25">
+                        <label for="fname">이메일</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input" type="text" name="email" id="email">
+				    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="lname">비밀번호</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="input" type="password" name="pwd">
+                    </div>
+                    <p class="etc"><a href="">Forgot password?</a></p>
+                </div>
+                <div class="signbtn">
+                    <button class="signin-btn" type="submit">Sign in</button>
+                    <p class="etc">or <a href="signup.html">Sign up</a> for free</p>
+                </div>
+            </form>
         </div>
     </body>
 </html>

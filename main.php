@@ -15,9 +15,6 @@
             }
 
             /* navbar */
-            body {
-                width: 1240px;
-            }
             .navbar {
                 background-color: #0B304D;
                 display: flex;
@@ -26,21 +23,26 @@
                 padding: 3px;
                 height: 55px;
             }
+            .logo {
+                position: absolute;
+                margin: 10px;
+            }
             .logo a {
                 color: #FFF0E3;
                 text-decoration: none;
                 font-size: x-large;
                 font-weight: bold;
-                margin-left: 20px;
+                padding-left: 10px;
             }
             #search {
-                margin-top: 10px;
-                margin-right: 20px;
+                position: absolute;
+                float: right;
+                right: 200px;
             }
             .register {
                 list-style-type: none;
                 display: flex;
-                margin-right: 0;
+                margin-left: auto;
                 flex-wrap: wrap;
                 white-space: nowrap;
             }
@@ -58,7 +60,14 @@
                 color: #0B304D;
                 border-radius: 5px;
             }
-            #nav-pf {
+            .menu {
+                position: relative;
+                display: inline-flex;
+                flex-direction: column;
+                align-items: flex-end;
+                margin-left: auto;
+            }
+            .nav-pf {
                 width: 45px;
                 height: 45px;
                 border-radius: 50%;
@@ -66,10 +75,30 @@
                 margin: 3px;
                 margin-right: 20px;
             }
-            #nav-pf img {
+            .nav-pf img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+            }
+            .menu-content {
+                display: none;
+                background-color: #0B304D;
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 10;
+            }
+            .menu-content a {
+                display: block;
+                color: #FFF0E3;
+                padding: 12px 16px;
+                text-decoration: none;
+            }
+            .menu:hover .menu-content {
+                display: block;
+            }
+            .menu-content a:hover {
+                background-color: #FFF0E3;
+                color: #0B304D;
             }
             
             /* hero (bootstrap) */
@@ -243,19 +272,24 @@
         
         <!-- navbar -->
         <nav class="navbar">
-            <div class="logo">
-                <a href="">CinePen</a>
-            </div>
-            <ul class="register">
-                <li id="search"><input type="text" name="search" placeholder="검색어를 입력해주세요."></li>
+            <p class="logo"><a href="">CinePen</a></p>
+            <input id="search" type="text" name="search" placeholder="검색어를 입력해주세요.">
+            <div class="register">
                 <?php
                 if($signin) { ?>
-                <li id="nav-pf"><a href=""><img src="images/grogu.jpg"></a></li>
+                <div class="menu" style="float: right;">
+                    <a class="nav-pf" href=""><img src="images/grogu.jpg"></a>
+                    <div class="menu-content">
+                        <a href="#">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                    </div>
+                </div>
                 <?php } else { ?>
-                <li><button onclick="location.href='signin.html'">Sign in</button></li>
-                <li><button onclick="location.href='signup.html'">Sign up</button></li>
+                <button onclick="location.href='signin.html'">Sign in</button>
+                <button onclick="location.href='signup.html'">Sign up</button>
                 <?php } ?>
-            </ul>
+            </div>
         </nav>
 
         <!-- hero -->

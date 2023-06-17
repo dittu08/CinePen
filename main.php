@@ -280,9 +280,9 @@
                 <div class="menu" style="float: right;">
                     <a class="nav-pf" href=""><img src="images/grogu.jpg"></a>
                     <div class="menu-content">
-                        <a href="#">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
+                        <a href="profile.html">Profile</a>
+                        <a href="setting.html">Setting</a>
+                        <a href="signout.php">Sign out</a>
                     </div>
                 </div>
                 <?php } else { ?>

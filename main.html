@@ -14,9 +14,6 @@
             }
 
             /* navbar */
-            body {
-                width: 1240px;
-            }
             .navbar {
                 background-color: #0B304D;
                 display: flex;
@@ -25,12 +22,16 @@
                 padding: 3px;
                 height: 55px;
             }
+            .logo {
+                position: absolute;
+                margin: 10px;
+            }
             .logo a {
                 color: #FFF0E3;
                 text-decoration: none;
                 font-size: x-large;
                 font-weight: bold;
-                margin-left: 20px;
+                padding-left: 10px;
             }
             #search {
                 position: absolute;
@@ -40,7 +41,7 @@
             .register {
                 list-style-type: none;
                 display: flex;
-                margin-right: 0;
+                margin-left: auto;
                 flex-wrap: wrap;
                 white-space: nowrap;
             }
@@ -232,14 +233,12 @@
     <body>
         <!-- navbar -->
         <nav class="navbar">
-            <div class="logo">
-                <a href="">Movie Reviews</a>
-            </div>
+            <p class="logo"><a href="">CinePen</a></p>
             <input id="search" type="text" name="search" placeholder="검색어를 입력해주세요.">
-            <ul class="register">
-                <li><button onclick="location.href='signin.html'">Sign in</button></li>
-                <li><button onclick="location.href='signup.html'">Sign up</button></li>
-            </ul>
+            <div class="register">
+                <button onclick="location.href='signin.html'">Sign in</button></li>
+                <button onclick="location.href='signup.html'">Sign up</button></li>
+            </div>
         </nav>
 
         <!-- hero -->

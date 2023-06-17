@@ -4,10 +4,10 @@ $email = $_POST['email'];
 $uname = $_POST['uname'];
 $pwd = $_POST['pwd'];
 $regdate = date('Y/m/d');
-$sql = "insert into member values('$email','$uname','$pwd','$regdate'";
+$sql = "insert into member (email, uname, pwd, regdate) values ('$email','$uname','$pwd','$regdate')";
 if($conn->query($sql)) {
   echo "<script>alert('회원가입 성공!');</script>";
-  echo "<script>location.replace('index.php')</script>";
+  echo "<script>location.replace('main.php')</script>";
 }
 else {
   echo "<script>alert('회원가입에 실패하였습니다.');</script>";

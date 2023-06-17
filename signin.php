@@ -8,14 +8,12 @@ $set = $conn->query($sql);
 
 if($set->num_rows > 0) {
     $row = $set->fetch_assoc();
-    $uname = $row['name'];
     $_SESSION['email'] = $email;
-    $_SESSION['uname'] = $uname;
     echo "<script>alert('환영합니다!');</script>";
-    echo "<script>location.replace('main.php')</script>";
+    echo "<script>location.replace('main.php');</script>";
 }
 else {
     echo "<script>alert('로그인에 실패하였습니다.');</script>";
-    echo "<script>location.replace('signin.html')</script>";
+    echo "<script>location.replace('signin.html');</script>";
 }
 ?>

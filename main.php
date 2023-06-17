@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -226,32 +224,25 @@ session_start();
         <?php
         $signin = false;
         if(isset($_SESSION['email'])) {
-            $email = $_SESSION['email'];
-            $uname = $_SESSION['uname'];
+            $signin = true;
         }
         ?>
         
         <!-- navbar -->
         <nav class="navbar">
-            <?php
-            if ($signin) {
-            ?>
             <div class="logo">
                 <a href="">CinePen</a>
             </div>
             <ul class="register">
                 <li id="search"><input type="text" name="search" placeholder="검색어를 입력해주세요."></li>
-                <li><a href="signout.php">Sign out</a></li>
+                <?php
+                if($signin) { ?>
+                <li><button onclick="location.href='signout.php'">Sign out</button></li>
                 <?php } else { ?>
-            <div class="logo">
-                <a href="">CinePen</a>
-            </div>
-            <ul class="register">
-                <li id="search"><input type="text" name="search" placeholder="검색어를 입력해주세요."></li>
                 <li><button onclick="location.href='signin.html'">Sign in</button></li>
                 <li><button onclick="location.href='signup.html'">Sign up</button></li>
+                <?php } ?>
             </ul>
-            <?php } ?>
         </nav>
 
         <!-- hero -->

@@ -176,17 +176,6 @@
                 height: 100%;
                 object-fit: cover;
             }
-            .re-name {
-                font-size: larger;
-                margin: 0;
-                padding-right: 20px;
-            }
-            .re-id {
-                font-size: smaller;
-                font-weight: lighter;
-                margin: 0;
-                padding-right: 20px;
-            }
             .re-card-body {
                 position: absolute;
                 bottom: 0;
@@ -198,18 +187,25 @@
             .re-card-movietitle {
                 font-size: 22px;
                 font-weight: bold;
-                margin: 20px;
-                margin-top: 10px;
+                margin: 10px;
                 flex: 1;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
-            .re-card-like {
+            .re-card-user {
+                display: flex;
+                align-items: flex-end;
+                margin-left: 10px;
+            }
+            .re-name {
+                font-size: larger;
+            }
+            .re-id {
                 font-size: smaller;
-                margin: 20px;
-                margin-top: 0;
-                height: 20px;
+                font-weight: lighter;
+                margin-left: 10px;
+                margin-bottom: 20px;
             }
 
             /* random movies */
@@ -373,12 +369,13 @@
                 <div class="re-card-profile">
                     <img src="images/grogu.jpg" alt="">
                 </div>
-                <p class="re-name">User123</p>
-                <p class="re-id">@user123123</p>
             </div>
             <div class="re-card-body">
               <p class="re-card-movietitle">가디언즈 오브 갤럭시: Volume 3</p>
-              <p class="re-card-like">좋아요 1  &nbsp;|  &nbsp;댓글 3</p>
+              <div class="re-card-user">
+                <p class="re-name">User123</p>
+                <p class="re-id">@user123123</p>
+              </div>
             </div>
         </div>
 

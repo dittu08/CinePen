@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -101,24 +104,172 @@
             /* profile edit */
             .pf-edit {
                 display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 100px;
+            }
+            .pf {
+                margin-bottom: auto;
+                margin-top: 20px;
+                display: flex;
                 flex-direction: column;
+                justify-content: center;
+                align-items: center;
             }
             .pf-img {
-                width: 150px;
-                height: 150px;
+                width: 100px;
+                height: 100px;
                 border-radius: 50%;
-                overflow: hidden;
+                background-image: url('images/default.jpg');
+                background-position: center;
+                background-size: cover;
             }
-            .pf-img img {
+            .del {
+                margin: 20px;
+            }
+            #modalbtn {
+                width: 70px;
+                height: 38px;
+                color: #0B304D;
+                background-color: #FF5E4C;
+                border: 1px solid #FF5E4C;
+                border-radius: 50px;
+            }
+            #modalbtn:hover {
+                color: #FFF0E3;
+                background-color: #ec5040;
+                border: 1px solid #ec5040;
+            }
+            .contents {
+                margin-left: 60px;
+            }
+            .title {
+                display: flex;
+                padding: 10px;
+                justify-content: space-between;
+            }
+            h3 {
+                font-weight: bold;
+                text-align: center;
+            }
+            .container {
+                color: #0B304D;
+                padding-left: 10px;
+                display: flex;
+                justify-content: center;
+                text-align: center;
+            }
+            .row {
+                padding: 10px;
+                width: 400px;
+            }
+            .col-25 {
+                text-align: left;
+                margin-bottom: 5px;
+            }
+            .col-id {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .at {
+                font-size: 25px;
+                padding-right: 7px;
+                padding-bottom: 7px;
+                color: #999;
+            }
+            input {
+                width: 355px;
+                height: 40px;
+                border: 1px solid #0B304D;
+                border-radius: 5px;
+                padding-left: 13px;
+            }
+            .sbm {
+                text-align: left;
+                margin-top: 30px;
+            }
+            .submit {
+                width: 70px;
+                height: 38px;
+                color: #0B304D;
+                background-color: #F38011;
+                border: 1px solid #F38011;
+                border-radius: 50px;
+            }
+            .submit:hover {
+                color: #FFF0E3;
+                background-color: #d46800;
+                border: 1px solid #bc5300;
+            }
+
+            /* delete modal */
+            .del-md {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                padding-top:100px;
+                left: 0;
+                top: 0;
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
+                overflow: auto;
+                background-color: rgba(0,0,0,0.2);
+            }
+            .md-content {
+                background-color: white;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 40px;
+                border: 1px solid #888;
+                width: 400px;
+                height: auto;
+                border-radius: 10px;
+            }
+            .del-p {
+                font-size: larger;
+                font-weight: bold;
+            }
+            .md-btns {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            .md-close {
+                margin: 5px;
+                font-size: large;
+                color: #0B304D;
+                background-color: #f3f3f3;
+                border: 1px solid #f3f3f3;
+                border-radius: 5px;
+                width: 350px;
+                height: 50px;
+            }
+            .md-close:hover {
+                background-color: #e7e7e7;
+                border: 1px solid #e7e7e7;
+            }
+            .md-del {
+                margin: 5px;
+                font-size: large;
+                color: #FFF0E3;
+                background-color: #FF5E4C;
+                border: 1px solid #FF5E4C;
+                border-radius: 5px;
+                width: 350px;
+                height: 50px;
+            }
+            .md-del:hover {
+                background-color: #ec5040;
+                border: 1px solid #ec5040;
             }
         </style>
     </head>
     <body>
         <?php
-        session_start();
         include_once('dbconn.php');
         $email = $_SESSION['email'];
         $sql = "select * from member where email = '$email'";
@@ -134,7 +285,7 @@
             <input id="search" type="text" name="search" placeholder="검색어를 입력해주세요.">
             <div class="register">
                 <div class="menu" style="float: right;">
-                    <a class="nav-pf" href=""><img src="images/grogu.jpg"></a>
+                    <a class="nav-pf" href=""><img src="images/default.jpg"></a>
                     <div class="menu-content">
                         <a href="profile.html">Profile</a>
                         <a href="signmodify.php">Setting</a>
@@ -146,13 +297,24 @@
 
         <!-- profile edit -->
         <div class="pf-edit">
-            <div class="pf-img">
-                <img src="images/grogu.jpg">
+            <div class="pf">
+                <div class="pf-img"></div>
+                <div class="del">
+                    <button id="modalbtn">탈퇴</button>
+                    <div id="delmodal" class="del-md">
+                        <div class="md-content">
+                            <p class="del-p">정말 탈퇴하시겠습니까?</p>
+                            <div class="md-btns">
+                                <button class="md-close">아니요</button>
+                                <button class="md-del" onclick="location.href = 'signdel.php'">예, 탈퇴하겠습니다</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="contents">
                 <div class="title">
                     <h3>회원 정보 수정</h3>
-                    <input type="submit" value="저장">
                 </div>
                 <div class="container">
                     <form action="signmodproc.php" method="post">
@@ -161,7 +323,7 @@
                                 <label for="lname">이름</label>
                             </div>
                             <div class="col-75">
-                                <input type="text" name="uname" value="<?= $row[1] ?>">
+                                <input type="text" name="uname" value="<?= $row[3] ?>">
                             </div>
                         </div>
                         <div class="row">
@@ -169,7 +331,7 @@
                                 <label for="lname">한 줄 소개</label>
                             </div>
                             <div class="col-75">
-                                <input type="text" name="uinfo" value="<?= $row[1] ?>">
+                                <input type="text" name="uinfo" value="<?= $row[4] ?>">
                             </div>
                         </div>
                         <div class="row">
@@ -185,7 +347,10 @@
                                 <label for="lname">아이디</label>
                             </div>
                             <div class="col-75">
-                                <input type="text" name="uid" value="<?= $row[1] ?>">
+                                <div class="col-id">
+                                    <div class="at">&#64;</div>
+                                    <input type="text" name="uid" value="<?= $row[1] ?>">
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -193,7 +358,7 @@
                                 <label for="lname">비밀번호</label>
                             </div>
                             <div class="col-75">
-                                <input type="password" name="pwd" value="<?= $row[2] ?>">
+                                <input type="password" name="pwd" value="<?= $row[2] ?>" id="pwd">
                             </div>
                         </div>
                         <div class="row">
@@ -201,10 +366,14 @@
                                 <label for="lname">비밀번호 확인</label>
                             </div>
                             <div class="col-75">
-                                <input type="password" name="pwd" value="<?= $row[2] ?>">
+                                <input type="password" name="chkpwd" value="<?= $row[2] ?>" id="cfpwd">
+                            </div>
+                            <div class="sbm">
+                                <input class="submit" type="submit" value="저장">
                             </div>
                         </div>
-                </form>
+                        
+                    </form>
                 </div>
             </div>
         </div>
@@ -215,6 +384,32 @@
         ?>
 
         <script>
+            // password check
+            function checkPassword() {
+                var pwd = document.getElementById('pwd').value;
+                var chkpwd = document.getElementById('cfpwd').value;
+                if(pwd !== cfpwd) {
+                alert("비밀번호가 일치하지 않습니다.");
+                return false;
+                }
+                else return true;
+            }
+
+            // delete
+            var modal = document.getElementById("delmodal");
+            var btn = document.getElementById("modalbtn");
+            var close = document.getElementsByClassName("md-close")[0];
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+            close.onclick = function() {
+                modal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
         </script>
     </body>
 </html>

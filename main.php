@@ -38,6 +38,8 @@
                 position: absolute;
                 float: right;
                 right: 200px;
+                width: 355px;
+                height: 40px;
             }
             .register {
                 list-style-type: none;
@@ -278,7 +280,7 @@
                 <?php
                 if($signin) { ?>
                 <div class="menu" style="float: right;">
-                    <a class="nav-pf" href=""><img src="images/grogu.jpg"></a>
+                    <a class="nav-pf" href=""><img src="images/default.jpg"></a>
                     <div class="menu-content">
                         <a href="profile.html">Profile</a>
                         <a href="signmodify.php">Setting</a>

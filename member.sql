@@ -9,7 +9,6 @@ CREATE TABLE `member` (
   `uid` varchar(20) unique,
   `pwd` varchar(255) NOT NULL,
   `uname` varchar(255),
-  `pf_pic` varchar(255),
   `pf_info` varchar(255),
   `rv_count` int DEFAULT 0,
   `avg_rating` float DEFAULT 0,

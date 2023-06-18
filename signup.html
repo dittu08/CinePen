@@ -176,7 +176,7 @@
               </div>
             </div>
             <div class="signbtn">
-              <button class="signup-btn" type="submit">Sign up</button>
+              <button class="signup-btn" type="submit" id="signupBtn">Sign up</button>
               <p class="etc">이미 계정이 있으신가요? <a href="signin.html">Sign in</a></p>
             </div>
           </form>
@@ -197,8 +197,12 @@
                   if(xhs.status === 200) {
                     // alert(xhs.responseText);
                     const result = JSON.parse(xhs.responseText);
-                    if(result.exists === true) alert("이미 등록된 이메일입니다.");
-                    else alert("사용 가능한 이메일입니다.");
+                    if(result.exists === true) {
+                      alert("이미 등록된 이메일입니다.");
+                    }
+                    else {
+                      alert("사용 가능한 이메일입니다.");
+                    }
                   }
                 }
               }

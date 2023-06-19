@@ -6,8 +6,6 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" user-scalable=yes>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://unpkg.com/@glidejs/glide@3.3.0/dist/css/glide.core.min.css">
-        <link rel="stylesheet" href="https://unpkg.com/@glidejs/glide@3.3.0/dist/css/glide.theme.min.css">
         <style>
             body {
                 width: 1240px;
@@ -102,37 +100,26 @@
                 background-color: #FFF0E3;
                 color: #0B304D;
             }
-            
-            /* hero (bootstrap) */
-            .carousel-bg {
-                filter: blur(50px);
-                max-height: 400px;
-            }
-            .carousel-caption {
+
+            /* boxoffice */
+            .card-container {
                 display: flex;
-                justify-content: center;
-                align-items: center;
-                max-width: 80%;
+                flex-wrap: wrap;
+                justify-content: space-between;
             }
-            .carousel-img {
-                max-width: 180px;
-                overflow: hidden;
-            }
-            .carousel-content {
-                text-align: left;
-                margin: 20px;
-            }
-            
-            /* box office (card: bootstrap / slider: glide) */
-            .boxoffice {
-                margin-top: 50px;
-                margin-left: 20px;
+            .card-link {
+                text-decoration: none;
+                color: black;
             }
             .card {
                 width: 12rem;
                 height: 22rem;
                 margin: 20px;
                 position: relative;
+            }
+            .card:hover {
+                background-color: rgba(0, 0, 0, 0.5);
+                color: black;
             }
             .card-img {
                 position: relative;
@@ -170,17 +157,21 @@
                 font-weight: lighter;
                 margin: 0;
             }
-
-            /* my list */
-            .mylist {
-                margin-top: 30px;
-                margin-left: 20px;
+            .card-text a, .card-date a {
+                text-decoration: none;
             }
-
+            
             /* reviews */
             .trending {
                 margin-top: 30px;
                 margin-left: 20px;
+                font-weight: bold;
+            }
+            .card {
+                width: 12rem;
+                height: 22rem;
+                margin: 20px;
+                position: relative;
             }
             .re-card-content {
                 height: 260px;
@@ -274,7 +265,7 @@
         
         <!-- navbar -->
         <nav class="navbar">
-            <p class="logo"><a href="">CinePen</a></p>
+            <p class="logo"><a href="main.php">CinePen</a></p>
             <input id="search" type="text" name="search" placeholder="검색어를 입력해주세요.">
             <div class="register">
                 <?php
@@ -282,7 +273,7 @@
                 <div class="menu" style="float: right;">
                     <a class="nav-pf" href=""><img src="images/default.jpg"></a>
                     <div class="menu-content">
-                        <a href="profile.html">Profile</a>
+                        <a href="profile.php">Profile</a>
                         <a href="signmodify.php">Setting</a>
                         <a href="signout.php">Sign out</a>
                     </div>
@@ -293,132 +284,46 @@
                 <?php } ?>
             </div>
         </nav>
-
-        <!-- hero -->
-        <div id="slideshow" class="carousel slide" data-bs-ride="carousel">
-
-            <!-- Indicators/dots -->
-            <div class="carousel-indicators">
-            <button type="button" data-bs-target="#slideshow" data-bs-slide-to="0" class="active"></button>
-            <button type="button" data-bs-target="#slideshow" data-bs-slide-to="1"></button>
-            <button type="button" data-bs-target="#slideshow" data-bs-slide-to="2"></button>
-            <button type="button" data-bs-target="#slideshow" data-bs-slide-to="3"></button>
-            <button type="button" data-bs-target="#slideshow" data-bs-slide-to="4"></button>
-            </div>
-            
-            <!-- The slideshow/carousel -->
-            <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="images/fastx.jpg" alt="" class="carousel-bg" style="width:100%">
-                <div class="carousel-caption">
-                    <img src="images/fastx.jpg" alt="" class="carousel-img" style="width:50%">
-                    <div class="carousel-content">
-                        <h3>Nature Photo</h3>
-                        <p>We had such a great time in this place!</p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="images/fastxW.jpg" alt="" class="carousel-bg" style="width:100%">
-                <div class="carousel-caption">
-                    <img src="images/johnwick4.jpg" alt="" class="carousel-img" style="width:100%">
-                    <div class="carousel-content">
-                        <h3>Nature Photo</h3>
-                        <p>We had such a great time in this place!</p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="images/fastxW.jpg" alt="" class="carousel-bg" style="width:100%">
-                <div class="carousel-caption">
-                    <img src="images/gotg3.jpg" alt="" class="carousel-img" style="width:100%">
-                    <div class="carousel-content">
-                        <h3>Nature Photo</h3>
-                        <p>We had such a great time in this place!</p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="images/fastxW.jpg" alt="" class="carousel-bg" style="width:100%">
-                <div class="carousel-caption">
-                    <img src="images/assets/img/slide/bg4.jpg" alt="" class="carousel-img" style="width:100%">
-                    <div class="carousel-content">
-                        <h3>Nature Photo</h3>
-                        <p>We had such a great time in this place!</p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="images/fastxW.jpg" alt="" class="carousel-bg" style="width:100%">
-                <div class="carousel-caption">
-                    <img src="images/assets/img/slide/bg5.jpg" alt="" class="carousel-img" style="width:100%">
-                    <div class="carousel-content">
-                        <h3>Nature Photo</h3>
-                        <p>We had such a great time in this place!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Left and right controls/icons -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#slideshow" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#slideshow" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
-        </div>
         
         <!-- box office -->
-        <h3 class="boxoffice">Box Office</h3>
-        <div class="glide">
-            <div class="glide__track" data-glide-el="track">
-              <ul class="glide__slides">
-                <!-- <li class="glide__slide">
-                    <div class="card">
-                        <div class="card-img">
-                            <img class="card-img-top" src="images/gotg3.jpg" alt="">
-                            <div class="card-img-overlay"></div>
-                        </div>
-                        <p class="card-rank">1</p>
-                        <div class="card-body">
-                          <p class="card-text">존 윅 4</p>
-                        </div>
-                    </div>
-                </li> -->
-              </ul>
-            </div>
-            <div class="glide__arrows" data-glide-el="controls">
-                <button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
-                <button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
-              </div>
-          </div>
-        </div>
-
-        <!-- my list -->
-        <h3 class="mylist">My List</h3>
-        <div class="glide">
-            <div class="glide__track" data-glide-el="track">
-              <ul class="glide__slides">
-                <li class="glide__slide">
-                    <div class="card">
-                        <div class="card-img">
-                            <img class="card-img-top" src="images/gotg3.jpg" alt="">
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">가디언즈 오브 갤럭시: Volume 3</p>
-                          <p class="card-date">개봉일</p>
-                        </div>
-                    </div>
-                </li>
-              </ul>
-            </div>
-            <div class="glide__arrows" data-glide-el="controls">
-                <button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
-                <button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
-              </div>
-          </div>
-        </div>
+        <div class="card-container">
+            <?php
+            include_once('dbconn.php');
+            $sql = "select * from movieinfo";
+            $result = $conn->query($sql);
+            if($result->num_rows > 0) {
+                $count = 0;
+                while ($row = $result->fetch_assoc()) {
+                    if ($count >= 10) {
+                        break; // 10개의 카드만 생성하고 루프를 종료합니다.
+                    }
+                    
+                    $movieId = $row['id'];
+                    $boxoffice = $row['boxoffice'];
+                    $title = $row['title'];
+                    $poster = $row['poster'];
+                    $date = $row['release_date'];
+                    
+                    echo '<a href="moviedetails.php?id=' . $movieId . '" class="card-link">';
+                    echo '<div class="card">';
+                    echo '<div class="card-img">';
+                    echo '<img src="' . $poster . '" class="card-img-top" alt="">';
+                    echo '<div class="card-img-overlay"></div>';
+                    echo '</div>';
+                    echo '<p class="card-rank">' . $boxoffice . '</p>';
+                    echo '<div class="card-body">';
+                    echo '<p class="card-text">' . $title . '</p>';
+                    echo '<p class="card-date">' . $date . '</p>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</a>';
+                    
+                    $count++;
+                }
+            } else {
+                echo "조회된 결과가 없습니다.";
+            }
+            ?>
         </div>
 
         <!-- reviews -->
@@ -444,92 +349,9 @@
             </div>
         </div>
 
-        <!-- random movies -->
-        <h3 class="randommovies">Random Movies</h3>
-        <div class="glide">
-            <div class="glide__track" data-glide-el="track">
-              <ul class="glide__slides">
-                <li class="glide__slide">
-                    <div class="card">
-                        <div class="card-img">
-                            <img class="card-img-top" src="images/gotg3.jpg" alt="">
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">가디언즈 오브 갤럭시: Volume 3</p>
-                          <p class="card-date">개봉일</p>
-                        </div>
-                    </div>
-                </li>
-              </ul>
-            </div>
-            <div class="glide__arrows" data-glide-el="controls">
-                <button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
-                <button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
-              </div>
-          </div>
-        </div>
-        </div>
-        </div>
 
-        <!-- footer (bootstrap) -->
-        <footer class="py-3 my-4">
-            <hr>
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-            </ul>
-            <p class="text-center text-muted">&copy; 2023 Daejin University</p>
-        </footer>
-
-
-        <script src="images/https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="images/https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
         <script>
-            const config = {
-                perView: 5,
-                breakpoints: {
-                    600: {
-                        perView: 1
-                    }
-                }
-            };
-            new Glide(".glide", config).mount();
             
-            const boxOfficeElement = document.getElementById('glide');
-            const apiUrl = 'https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=1420db90b400f408c2b0d75c8602283e&targetDt=20230602';
-            const glideElement = document.querySelector('.glide__slides');
-
-            fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                const boxOfficeList = data.boxOfficeResult.dailyBoxOfficeList;
-
-                boxOfficeList.forEach(item => {
-                    const cardElement = document.createElement('li');
-                    cardElement.classList.add('glide__slides');
-                    cardElement.innerHTML = `
-                        <div class="card">
-                            <div class="card-img">
-                                <img class="card-img-top" src="images/johnwick4.jpg" alt="">
-                                <div class="card-img-overlay"></div>
-                            </div>                            
-                            <p class="card-rank">${item.rank}</p>
-                            <div class="card-body">
-                                <p class="card-text">${item.movieNm}</p>
-                                <p class="card-date">${item.openDt}</p>
-                            </div>
-                        </div>
-                    `;
-                    glideElement.appendChild(cardElement);
-                })
-                new Glide('.glide', config).mount();
-            })
-            .catch(error => {
-                console.log('Error', error);
-            });
           </script>
     </body>
 </html>

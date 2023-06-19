@@ -38,6 +38,8 @@ session_start();
                 position: absolute;
                 float: right;
                 right: 200px;
+                width: 355px;
+                height: 40px;
             }
             .register {
                 list-style-type: none;
@@ -167,6 +169,26 @@ session_start();
                 text-align: left;
                 margin-bottom: 5px;
             }
+            input {
+                width: 355px;
+                height: 40px;
+                border: 1px solid #0B304D;
+                border-radius: 5px;
+                padding: 2px 13px;
+            }
+            span {
+                color: #999;
+            }
+            textarea {
+                width: 355px;
+                height: 80px;
+                max-height: auto;
+                border: 1px solid #0B304D;
+                border-radius: 5px;
+                padding: 5px 13px;
+                overflow: hidden;
+                resize: none;
+            }
             .col-id {
                 display: flex;
                 align-items: center;
@@ -177,13 +199,6 @@ session_start();
                 padding-right: 7px;
                 padding-bottom: 7px;
                 color: #999;
-            }
-            input {
-                width: 355px;
-                height: 40px;
-                border: 1px solid #0B304D;
-                border-radius: 5px;
-                padding-left: 13px;
             }
             .sbm {
                 text-align: left;
@@ -281,13 +296,13 @@ session_start();
 
         <!-- navbar -->
         <nav class="navbar">
-            <p class="logo"><a href="">CinePen</a></p>
+            <p class="logo"><a href="main.php">CinePen</a></p>
             <input id="search" type="text" name="search" placeholder="검색어를 입력해주세요.">
             <div class="register">
                 <div class="menu" style="float: right;">
                     <a class="nav-pf" href=""><img src="images/default.jpg"></a>
                     <div class="menu-content">
-                        <a href="profile.html">Profile</a>
+                        <a href="profile.php">Profile</a>
                         <a href="signmodify.php">Setting</a>
                         <a href="signout.php">Sign out</a>
                     </div>
@@ -329,9 +344,10 @@ session_start();
                         <div class="row">
                             <div class="col-25">
                                 <label for="lname">한 줄 소개</label>
+                                <span id="charCount">0/50</span>
                             </div>
                             <div class="col-75">
-                                <input type="text" name="uinfo" value="<?= $row[4] ?>">
+                            <textarea type="text" name="uinfo" id="uinfo-input" maxlength="50" placeholder="한 줄 소개를 입력해 주세요."><?= $row[4] ?></textarea>
                             </div>
                         </div>
                         <div class="row">
@@ -349,7 +365,7 @@ session_start();
                             <div class="col-75">
                                 <div class="col-id">
                                     <div class="at">&#64;</div>
-                                    <input type="text" name="uid" value="<?= $row[1] ?>">
+                                    <input type="text" name="uid" value="<?= $row[1] ?>" placeholder="아이디를 입력해 주세요.">
                                 </div>
                             </div>
                         </div>
@@ -372,7 +388,6 @@ session_start();
                                 <input class="submit" type="submit" value="저장">
                             </div>
                         </div>
-                        
                     </form>
                 </div>
             </div>
@@ -384,6 +399,20 @@ session_start();
         ?>
 
         <script>
+            // info character count
+            const uinfoInput = document.getElementById('uinfo-input');
+            const characterCount = document.getElementById('charCount');
+
+            uinfoInput.addEventListener('input', function() {
+                const inputText = uinfoInput.value;
+                const textLength = inputText.length;
+                characterCount.textContent = textLength + '/50';
+
+                if(currentLength > 50) {
+                    input.value = input.value.slice(0, 50);
+                }
+            });
+
             // password check
             function checkPassword() {
                 var pwd = document.getElementById('pwd').value;

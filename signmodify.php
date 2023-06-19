@@ -34,13 +34,6 @@ session_start();
                 font-weight: bold;
                 padding-left: 10px;
             }
-            #search {
-                position: absolute;
-                float: right;
-                right: 200px;
-                width: 355px;
-                height: 40px;
-            }
             .register {
                 list-style-type: none;
                 display: flex;
@@ -297,12 +290,10 @@ session_start();
         <!-- navbar -->
         <nav class="navbar">
             <p class="logo"><a href="main.php">CinePen</a></p>
-            <input id="search" type="text" name="search" placeholder="검색어를 입력해주세요.">
             <div class="register">
                 <div class="menu" style="float: right;">
                     <a class="nav-pf" href=""><img src="images/default.jpg"></a>
                     <div class="menu-content">
-                        <a href="profile.php">Profile</a>
                         <a href="signmodify.php">Setting</a>
                         <a href="signout.php">Sign out</a>
                     </div>

@@ -32,13 +32,6 @@
                 font-weight: bold;
                 padding-left: 10px;
             }
-            #search {
-                position: absolute;
-                float: right;
-                right: 200px;
-                width: 355px;
-                height: 40px;
-            }
             .register {
                 list-style-type: none;
                 display: flex;
@@ -102,6 +95,11 @@
             }
 
             /* boxoffice */
+            h3 {
+                margin-top: 30px;
+                margin-left: 20px;
+                font-weight: bold;
+            }
             .card-container {
                 display: flex;
                 flex-wrap: wrap;
@@ -109,6 +107,9 @@
             }
             .card-link {
                 text-decoration: none;
+                color: black;
+            }
+            .card-link:hover {
                 color: black;
             }
             .card {
@@ -162,71 +163,66 @@
             }
             
             /* reviews */
-            .trending {
-                margin-top: 30px;
-                margin-left: 20px;
-                font-weight: bold;
+            .review-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
             }
-            .card {
-                width: 12rem;
-                height: 22rem;
+            .review-container .card {
+                width: 370px;
+                height: 300px;
                 margin: 20px;
                 position: relative;
             }
+            .review-container .card:hover {
+                background-color: white;
+                cursor: pointer;
+            }
             .re-card-content {
-                height: 260px;
-                width: 300px;
-                padding-top: 20px;
-                padding-left: 25px;
+                position: relative;
+                height: 180px;
+                width: 100%;
+                padding: 30px;
                 overflow: hidden;
+                background-color: #eee;
+            }
+            .re-card-title {
+                font-size: large;
+                font-weight: bold;
             }
             .re-card.text {
                 text-overflow: ellipsis;
-            }
-            .re-card-overlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 260px;
-                background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 5%, rgba(255, 255, 255, 0.5) 20%, rgba(255, 255, 255, 0) 100%);;
             }
             .re-card-pf {
                 position: absolute;
                 bottom: 0;
                 right: 0;
                 height: 200px;
-                padding: 20px;
+                padding: 20px 40px;
                 text-align: right;
             }
-            .re-card-profile {
+            .pf-img {
                 width: 100px;
                 height: 100px;
                 border-radius: 50%;
-                overflow: hidden;
-                margin: 10px;
-                margin-bottom: 5px;
-            }
-            .re-card-profile img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
+                background-image: url('images/default.jpg');
+                background-position: center;
+                background-size: cover;
+                margin-left: auto;
             }
             .re-name {
                 font-size: larger;
                 margin: 0;
-                padding-right: 20px;
             }
             .re-id {
                 font-size: smaller;
                 font-weight: lighter;
                 margin: 0;
-                padding-right: 20px;
             }
             .re-card-body {
                 position: absolute;
                 bottom: 0;
-                width: 70%;
+                width: 230px;
                 height: 100px;
                 display: flex;
                 flex-direction: column;
@@ -234,24 +230,16 @@
             .re-card-movietitle {
                 font-size: 22px;
                 font-weight: bold;
-                margin: 20px;
-                margin-top: 10px;
+                margin: 10px 20px 10px;
                 flex: 1;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
-            .re-card-like {
+            .createddate {
                 font-size: smaller;
-                margin: 20px;
+                margin: 25px;
                 margin-top: 0;
-                height: 20px;
-            }
-
-            /* random movies */
-            .randommovies {
-                margin-top: 30px;
-                margin-left: 20px;
             }
         </style>
     </head>
@@ -266,14 +254,12 @@
         <!-- navbar -->
         <nav class="navbar">
             <p class="logo"><a href="main.php">CinePen</a></p>
-            <input id="search" type="text" name="search" placeholder="검색어를 입력해주세요.">
             <div class="register">
                 <?php
                 if($signin) { ?>
                 <div class="menu" style="float: right;">
                     <a class="nav-pf" href=""><img src="images/default.jpg"></a>
                     <div class="menu-content">
-                        <a href="profile.php">Profile</a>
                         <a href="signmodify.php">Setting</a>
                         <a href="signout.php">Sign out</a>
                     </div>
@@ -286,6 +272,7 @@
         </nav>
         
         <!-- box office -->
+        <h3>Boxoffice</h3>
         <div class="card-container">
             <?php
             include_once('dbconn.php');
@@ -327,31 +314,50 @@
         </div>
 
         <!-- reviews -->
-        <h3 class="trending">Trending Now</h3>
-        <div class="card" style="width: 25rem;">
-            <div class="re-card-content">
-                <p class="re-card-title">What is Lorem Ipsum?</p>
-                <p class="re-card-text">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
-            </div>
-            <div class="re-card-overlay"></div>
-            <div class="re-card-pf">
-                <div class="re-card-profile">
-                    <img src="images/grogu.jpg" alt="">
+        <h3>Recent Reviews</h3>
+        <div class="review-container">
+            <?php
+            $reviewQuery = "select reviews.rv_title, reviews.rv_content, reviews.created_date, reviews.movie_id, member.uname, member.email, movieinfo.title
+                            from reviews, member, movieinfo
+                            where reviews.user_email = member.email and reviews.movie_id = movieinfo.id
+                            order by reviews.created_date desc";
+            $result = $conn->query($reviewQuery);
+
+            if($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    $rvTitle = $row['rv_title'];
+                    $rvContent = $row['rv_content'];
+                    $createdDate = $row['created_date'];
+                    $movieId = $row['movie_id'];
+                    $uname = $row['uname'];
+                    $userEmail = $row['email'];
+                    $movieTitle = $row['title'];
+                    ?>
+
+                <div class="card" onclick="goToMoviePage('<?= $movieId ?>')">
+                    <div class="re-card-content">
+                        <p class="re-card-title"><?= $rvTitle ?></p>
+                        <p class="re-card-text"><?= $rvContent ?></p>
+                    </div>
+                    <div class="re-card-pf">
+                        <div class="pf-img"></div>
+                        <p class="re-name"><?= $uname ?></p>
+                        <p class="re-id">&#64;<?= $userEmail ?></p>
+                    </div>
+                    <div class="re-card-body">
+                        <p class="re-card-movietitle"><?= $movieTitle ?></p>
+                        <p class="createddate"><?= $createdDate ?></p>
+                    </div>
                 </div>
-                <p class="re-name">User123</p>
-                <p class="re-id">@user123123</p>
-            </div>
-            <div class="re-card-body">
-              <p class="re-card-movietitle">가디언즈 오브 갤럭시: Volume 3</p>
-              <p class="re-card-like">좋아요 1  &nbsp;|  &nbsp;댓글 3</p>
-            </div>
+            <?php }
+            }
+            else echo "<script>alert('리뷰가 존재하지 않습니다.');</script>";
+            ?>
         </div>
-
-
         <script>
-            
-          </script>
+            function goToMoviePage(movieId) {
+                window.location.href = 'moviedetails.php?id=' + movieId;
+            }
+        </script>
     </body>
 </html>

@@ -32,13 +32,6 @@
                 font-weight: bold;
                 padding-left: 10px;
             }
-            #search {
-                position: absolute;
-                float: right;
-                right: 200px;
-                width: 355px;
-                height: 40px;
-            }
             .register {
                 list-style-type: none;
                 display: flex;
@@ -164,14 +157,22 @@
             .myRv-f, .avgRt-f, .myRt-f {
                 font-size: 28px;
             }
+            .myRating .star {
+                font-size: 28px;
+                cursor: pointer;
+            }
+            .myRating .star.filled {
+                color: gold;
+            }
 
             /* review */
+            h3 {
+                margin-top: 30px;
+                margin-left: 20px;
+                font-weight: bold;
+            }
             .rv {
                 margin-top: 60px;
-            }
-            .rv-tt {
-                font-size: x-large;
-                font-weight: bold;
             }
             .review {
                 display: flex;
@@ -200,6 +201,10 @@
                 flex-direction: column;
                 margin: 20px;
             }
+            .rv-pf {
+                display: flex;
+                flex-direction: column;
+            }
             .pf-user {
                 display: flex;
                 justify-content: center;
@@ -214,10 +219,11 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                margin-left: 20px;
             }
             .at, .userid {
                 color: #999;
-                margin: 12px 0 auto;
+                margin: 0;
                 font-size: small;
             }
             .rv-title {
@@ -251,6 +257,85 @@
                 background-color: #d46800;
                 border: 1px solid #bc5300;
             }
+
+            /* user reviews */
+            .review-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .review-container .card {
+                width: 370px;
+                height: 300px;
+                margin: 20px;
+                position: relative;
+            }
+            .review-container .card:hover {
+                background-color: white;
+            }
+            .re-card-content {
+                position: relative;
+                height: 180px;
+                width: 100%;
+                padding: 30px;
+                overflow: hidden;
+                background-color: #eee;
+            }
+            .re-card-title {
+                font-size: large;
+                font-weight: bold;
+            }
+            .re-card.text {
+                text-overflow: ellipsis;
+            }
+            .re-card-pf {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                height: 200px;
+                padding: 20px 40px;
+                text-align: right;
+            }
+            .pf-img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                background-image: url('images/default.jpg');
+                background-position: center;
+                background-size: cover;
+                margin-left: auto;
+            }
+            .re-name {
+                font-size: larger;
+                margin: 0;
+            }
+            .re-id {
+                font-size: smaller;
+                font-weight: lighter;
+                margin: 0;
+            }
+            .re-card-body {
+                position: absolute;
+                bottom: 0;
+                width: 230px;
+                height: 100px;
+                display: flex;
+                flex-direction: column;
+            }
+            .re-card-movietitle {
+                font-size: 22px;
+                font-weight: bold;
+                margin: 10px 20px 10px;
+                flex: 1;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .createddate {
+                font-size: smaller;
+                margin: 25px;
+                margin-top: 0;
+            }
         </style>
     </head>
     <body>
@@ -264,14 +349,12 @@
         <!-- navbar -->
         <nav class="navbar">
             <p class="logo"><a href="main.php">CinePen</a></p>
-            <input id="search" type="text" name="search" placeholder="검색어를 입력해주세요.">
             <div class="register">
                 <?php
                 if($signin) { ?>
                 <div class="menu" style="float: right;">
                     <a class="nav-pf" href=""><img src="images/default.jpg"></a>
                     <div class="menu-content">
-                        <a href="profile.php">Profile</a>
                         <a href="signmodify.php">Setting</a>
                         <a href="signout.php">Sign out</a>
                     </div>
@@ -337,11 +420,17 @@
         <div class="pf-btns">
             <div class="avgRating">
                 <p class="avgRt-w">평균 별점</p>
-                <p class="avgRt-f">⭐<?= $avgrating ?></p>
+                <p class="avgRt-f">&#9733;<?= $avgrating ?></p>
             </div>
             <div class="myRating">
                 <p class="myRt-w">내 별점</p>
-                <p class="myRt-f">132</p>
+                <p class="myRt-f">
+                    <span class="star" data-rating="1">&#9733;</span>
+                    <span class="star" data-rating="2">&#9733;</span>
+                    <span class="star" data-rating="3">&#9733;</span>
+                    <span class="star" data-rating="4">&#9733;</span>
+                    <span class="star" data-rating="5">&#9733;</span>
+                </p>
             </div>
             <div class="mvReview">
                 <p class="myRv-w">남긴 리뷰 수</p>
@@ -352,7 +441,7 @@
         <!-- review -->
         <div class="rv">
             <form action="moviedetailsproc.php" method="post">
-                <p class="rv-tt">리뷰 작성</p>
+                <h3 class="rv-tt">리뷰 작성</h3>
                 <div class="review">
                     <?php
                     $email = $_SESSION['email'];
@@ -364,24 +453,23 @@
                     ?>
                     <div class="rv-user">
                         <div class="pf-img"></div>
-                        <p class="pf-name"><?= $row[3] ?></p>
-                        <div class="pf-id">
-                            <div class="at">&#64;</div>
-                            <p class="userid"><?= !empty($row[1]) ? $row[1] : 'ID를 입력해 주세요.'; ?></p>
+                        <div class="rv-pf">
+                            <p class="pf-name"><?= $row[3] ?></p>
+                            <div class="pf-id">
+                                <div class="at">&#64;</div>
+                                <p class="userid"><?= !empty($row[1]) ? $row[1] : '아이디를 입력해 주세요.'; ?></p>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- moviedetails.php -->
                     <?php
                     $email = $_SESSION['email'];
-                    $reviewsql = "select * from reviews where user_email = '$email'";
+                    $reviewsql = "select * from reviews where user_email = '$email' and movie_id = '$movieId'";
                     $result = $conn->query($reviewsql);
                     if($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
                         // var_dump($row);
                         $rvtitle = $row['rv_title'];
                         $rvcontent = $row['rv_content'];
-                        $userEmail = $row['user_email'];
                         $movieId = $row['movie_id'];
                         $id = $row['id'];
                     }
@@ -392,16 +480,83 @@
                     ?>
                     <input type="hidden" name="id" value="<?= $id ?>">
                     <input type="hidden" name="movie_id" value="<?= $movieId ?>">
-                    <input type="hidden" name="user_email" value="<?= $userEmail ?>">
                     <input type="text" class="rv-title" name="rv_title" value="<?= $rvtitle ?>" placeholder="제목을 입력하세요.">
                     <textarea class="rv-content" name="rv_content" placeholder="내용을 입력하세요."><?= $rvcontent ?></textarea>
                     <input class="submit" type="submit" value="저장">
                 </div>
             </form>
         </div>
+
+        <!-- user review -->
+        <h3>Recent Reviews</h3>
+        <div class="review-container">
+            <?php
+            $reviewQuery = "select reviews.rv_title, reviews.rv_content, reviews.created_date, reviews.movie_id, member.uname, member.email, movieinfo.title
+                            from reviews, member, movieinfo
+                            where reviews.user_email = member.email and reviews.movie_id = movieinfo.id
+                            order by reviews.created_date desc";
+            $result = $conn->query($reviewQuery);
+
+            if($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    $rvTitle = $row['rv_title'];
+                    $rvContent = $row['rv_content'];
+                    $createdDate = $row['created_date'];
+                    $movieId = $row['movie_id'];
+                    $uname = $row['uname'];
+                    $userEmail = $row['email'];
+                    $movieTitle = $row['title'];
+                    $moviereviewid = $_GET['id'];
+
+                    if($movieId === $moviereviewid) {
+                    ?>
+                        <div class="card">
+                            <div class="re-card-content">
+                                <p class="re-card-title"><?= $rvTitle ?></p>
+                                <p class="re-card-text"><?= $rvContent ?></p>
+                            </div>
+                            <div class="re-card-pf">
+                                <div class="pf-img"></div>
+                                <p class="re-name"><?= $uname ?></p>
+                                <p class="re-id">&#64;<?= $userEmail ?></p>
+                            </div>
+                            <div class="re-card-body">
+                                <p class="re-card-movietitle"><?= $movieTitle ?></p>
+                                <p class="createddate"><?= $createdDate ?></p>
+                            </div>
+                        </div>
+            <?php   }
+                }
+            }
+            else echo "<script>alert('리뷰가 존재하지 않습니다.');</script>";
+            ?>
+        </div>
+        
         <?php
         $result->close();
         $conn->close();
         ?>
+
+        <script>
+            document.querySelectorAll('.myRt-f .star').forEach(star => {
+            star.addEventListener('click', function() {
+                var rating = this.getAttribute('data-rating');
+                updateStarRating(this.parentNode, rating);
+                
+                console.log('별점:', rating);
+            });
+            });
+
+            function updateStarRating(starContainer, rating) {
+            starContainer.querySelectorAll('.star').forEach(star => {
+                var starRating = star.getAttribute('data-rating');
+                if (starRating <= rating) {
+                star.classList.add('filled');
+                } else {
+                star.classList.remove('filled');
+                }
+            });
+            }
+        </script>
     </body>
 </html>

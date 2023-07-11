@@ -412,15 +412,17 @@
         ?>
 
         <!-- button -->
-        <?php
-        $rvcount = $row['rv_count'];
-        $avgrating = $row['avg_rating'];
-        ?>
-
         <div class="pf-btns">
             <div class="avgRating">
                 <p class="avgRt-w">평균 별점</p>
-                <p class="avgRt-f">&#9733;<?= $avgrating ?></p>
+                <?php
+                $movieId = $_GET['id'];
+                $query = "select AVG(rating) as avg_rating from movie_rating where movie_id = $movieId";
+                $result = $conn->query($query);
+                $row = $result->fetch_assoc();
+                $avgrating = $row['avg_rating'];
+                ?>
+                <p class="avgRt-f">&#9733;<?= number_format($avgrating, 1) ?></p>
             </div>
             <div class="myRating">
                 <p class="myRt-w">내 별점</p>
@@ -433,8 +435,20 @@
                 </p>
             </div>
             <div class="mvReview">
-                <p class="myRv-w">남긴 리뷰 수</p>
-                <p class="myRv-f"><?= $rvcount ?></p>
+                <p class="myRv-w">리뷰 수</p>
+                <?php
+                $reviewCountSql = "select count(*) as reviewCount from reviews where movie_id = '$movieId'";
+                $reviewCountResult = $conn->query($reviewCountSql);
+
+                if($reviewCountResult) {
+                    $reviewCountRow = $reviewCountResult->fetch_assoc();
+                    $reviewCount = $reviewCountRow['reviewCount'];
+                    ?>
+                    <p class="myRv-f"><?= $reviewCount ?></p>
+                <?php
+                }
+                else echo "리뷰 수를 가져오는 데 실패했습니다.";
+                ?>
             </div>
         </div>
 
@@ -444,34 +458,49 @@
                 <h3 class="rv-tt">리뷰 작성</h3>
                 <div class="review">
                     <?php
-                    $email = $_SESSION['email'];
-                    $usersql = "select * from member where email = '$email'";
-                    $result = $conn->query($usersql);
-                    if($result->num_rows > 0) {
-                        $row = $result->fetch_row();
+                    if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
+                        $email = $_SESSION['email'];
+                    
+                        if(!empty($email)) {
+                            $usersql = "select * from member where email = '$email'";
+                            $result = $conn->query($usersql);
+
+                            if($result->num_rows > 0) {
+                                $row = $result->fetch_row();
+                        ?>
+                                <div class="rv-user">
+                                    <div class="pf-img"></div>
+                                    <div class="rv-pf">
+                                        <p class="pf-name"><?= !empty($row[3]) ? $row[3] : '로그인해 주세요.'; ?></p>
+                                        <div class="pf-id">
+                                            <div class="at">&#64;</div>
+                                            <p class="userid"><?= !empty($row[1]) ? $row[1] : '아이디를 입력해 주세요.'; ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                        <?php
+                            }
+                        } 
                     }
                     ?>
-                    <div class="rv-user">
-                        <div class="pf-img"></div>
-                        <div class="rv-pf">
-                            <p class="pf-name"><?= $row[3] ?></p>
-                            <div class="pf-id">
-                                <div class="at">&#64;</div>
-                                <p class="userid"><?= !empty($row[1]) ? $row[1] : '아이디를 입력해 주세요.'; ?></p>
-                            </div>
-                        </div>
-                    </div>
                     <?php
-                    $email = $_SESSION['email'];
-                    $reviewsql = "select * from reviews where user_email = '$email' and movie_id = '$movieId'";
-                    $result = $conn->query($reviewsql);
-                    if($result->num_rows > 0) {
-                        $row = $result->fetch_assoc();
-                        // var_dump($row);
-                        $rvtitle = $row['rv_title'];
-                        $rvcontent = $row['rv_content'];
-                        $movieId = $row['movie_id'];
-                        $id = $row['id'];
+                    if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
+                        $email = $_SESSION['email'];
+
+                        $reviewsql = "select * from reviews where user_email = '$email' and movie_id = '$movieId'";
+                        $result = $conn->query($reviewsql);
+                        if($result->num_rows > 0) {
+                            $row = $result->fetch_assoc();
+                            // var_dump($row);
+                            $rvtitle = $row['rv_title'];
+                            $rvcontent = $row['rv_content'];
+                            $movieId = $row['movie_id'];
+                            $id = $row['id'];
+                        }
+                        else {
+                            $rvtitle = '';
+                            $rvcontent = '';
+                        }
                     }
                     else {
                         $rvtitle = '';
@@ -539,23 +568,44 @@
 
         <script>
             document.querySelectorAll('.myRt-f .star').forEach(star => {
-            star.addEventListener('click', function() {
-                var rating = this.getAttribute('data-rating');
-                updateStarRating(this.parentNode, rating);
-                
-                console.log('별점:', rating);
-            });
+                star.addEventListener('click', function() {
+                    var rating = this.getAttribute('data-rating');
+                    updateStarRating(this.parentNode, rating);
+
+                    var movieId = '<?php echo $movieId; ?>';
+                    var userEmail = '<?php echo $userEmail; ?>';
+                    
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'save_rating.php');
+                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            var response = xhr.responseText;
+                            if (response === 'success') {
+                                alert('평점이 저장되었습니다.');
+                            } else {
+                                alert('평점 저장에 실패했습니다.');
+                            }
+                        }
+                        else {
+                            alert('요청 실패: ' + xhr.status);
+                        }
+                    };
+                    xhr.send('rating=' + rating + '&movieId=' + movieId + '&userEmail=' + userEmail);
+
+                    console.log('별점:', rating);
+                });
             });
 
             function updateStarRating(starContainer, rating) {
-            starContainer.querySelectorAll('.star').forEach(star => {
-                var starRating = star.getAttribute('data-rating');
-                if (starRating <= rating) {
-                star.classList.add('filled');
-                } else {
-                star.classList.remove('filled');
-                }
-            });
+                starContainer.querySelectorAll('.star').forEach(star => {
+                    var starRating = star.getAttribute('data-rating');
+                    if (starRating <= rating) {
+                        star.classList.add('filled');
+                    } else {
+                        star.classList.remove('filled');
+                    }
+                });
             }
         </script>
     </body>

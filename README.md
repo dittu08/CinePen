@@ -1,7 +1,7 @@
 # CinePen🎬
 
 <p align="center">
-  <img src="https://github.com/dittu08/CinePen/assets/128888732/f5f0fc4c-b9b8-4d18-9604-0eb4a346c940.png" width="300">
+  <img src="https://user-images.githubusercontent.com/128888732/253540513-e26e895b-9647-4d54-9893-8e0c25f9f08c.jpg" width="300">
 </p>
 
 ### 개발 기간📆
